@@ -1,7 +1,6 @@
 {
   "name": "mengserve",
   "version": "1.0.0",
-  "main": "index.js",
   "repository": "https://github.com/Yinyiran/mengserve.git",
   "author": "chrisgad",
   "license": "MIT",
@@ -9,7 +8,8 @@
     "dev": "egg-bin dev"
   },
   "dependencies": {
-    "egg": "^2.26.0"
+    "egg": "^2.26.0",
+    "egg-mysql": "^3.0.0"
   },
   "devDependencies": {
     "egg-bin": "^4.14.1"
