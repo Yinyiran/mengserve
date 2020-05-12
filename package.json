@@ -5,12 +5,11 @@
   "author": "chrisgad",
   "license": "MIT",
   "scripts": {
-    "dev": "egg-bin dev"
+    "serve": "egg-bin dev"
   },
   "dependencies": {
     "egg": "^2.26.0",
     "egg-mysql": "^3.0.0",
-    "mz": "^2.7.0",
     "mz-modules": "^2.1.0"
   },
   "devDependencies": {

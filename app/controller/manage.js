@@ -1,7 +1,8 @@
 const Controller = require("egg").Controller;
-const fs = require('mz/fs');
+const fs = require('fs');
 const path = require('path');
 const pump = require('mz-modules/pump');
+const {} = require("../")
 
 class ManageController extends Controller {
   async uploadFile() {
@@ -12,6 +13,9 @@ class ManageController extends Controller {
     try {
       for (const file of files) {
         const filename = file.filename.toLowerCase();
+        let path = path.join(this.config.baseDir, 'app/public', filename)
+        let res = fs.accessSync(path, fs.constants.F_OK)
+        if (!res) fs.mkdirSync(path);
         const targetPath = path.join(this.config.baseDir, 'app/public', filename);
         const source = fs.createReadStream(file.filepath);
         const target = fs.createWriteStream(targetPath);
