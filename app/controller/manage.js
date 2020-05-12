@@ -2,7 +2,7 @@ const Controller = require("egg").Controller;
 const fs = require('fs');
 const path = require('path');
 const pump = require('mz-modules/pump');
-const {} = require("../")
+const UtilService = require("../../service/utile")
 
 class ManageController extends Controller {
   async uploadFile() {
@@ -12,19 +12,23 @@ class ManageController extends Controller {
 
     try {
       for (const file of files) {
-        const filename = file.filename.toLowerCase();
-        let path = path.join(this.config.baseDir, 'app/public', filename)
-        let res = fs.accessSync(path, fs.constants.F_OK)
-        if (!res) fs.mkdirSync(path);
-        const targetPath = path.join(this.config.baseDir, 'app/public', filename);
+        const name = file.filename.toLowerCase();
+        let ext = name.slice(name.lastIndexOf("."));
+        let newName = new Date().getTime() + ext
+        let key = ctx.request.body.type + "Path";
+        let dir = path.join(this.config.baseDir, UtilService[key]);
+        const targetPath = path.join(dir, newName)
+        try {
+          fs.accessSync(path.join(dir));
+        } catch (error) {
+          fs.mkdirSync(path.join(dir));
+        }
         const source = fs.createReadStream(file.filepath);
         const target = fs.createWriteStream(targetPath);
         await pump(source, target);
-        // ctx.logger.warn('save %s to %s', file.filepath, targetPath);
       }
     } finally {
-      // delete those request tmp files
-      await ctx.cleanupRequestFiles();
+      await ctx.cleanupRequestFiles();// delete those request tmp files
     }
 
     const fields = [];
@@ -35,6 +39,12 @@ class ManageController extends Controller {
       });
     }
     ctx.body = { fields, files }
+  }
+  getFiles() {
+    const { ctx } = this;
+    let filepaths = path.join(this.config.baseDir, `resource/${ctx.query.type}`)
+    
+    ctx.body = fs.readdirSync(imgpath)
   }
 }
 

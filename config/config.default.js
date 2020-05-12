@@ -9,6 +9,9 @@ module.exports = appInfo => {
         headerName: 'x-csrf-token',// 自定义请求头
       }
     },
+    assets: {
+      publicPath: '/resource/',
+    },
     multipart: {
       mode: "file"
     },
