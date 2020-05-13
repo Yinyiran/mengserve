@@ -1,7 +1,7 @@
 const Controller = require("egg").Controller;
-const fs = require('fs');
-const path = require('path');
-const pump = require('mz-modules/pump');
+const FS = require('fs');
+const Path = require('path');
+const Pump = require('mz-modules/pump');
 const UtilService = require("../../service/utile")
 
 class ManageController extends Controller {
@@ -16,16 +16,16 @@ class ManageController extends Controller {
         let ext = name.slice(name.lastIndexOf("."));
         let newName = new Date().getTime() + ext
         let key = ctx.request.body.type + "Path";
-        let dir = path.join(this.config.baseDir, UtilService[key]);
-        const targetPath = path.join(dir, newName)
+        let dir = Path.join(this.config.baseDir, UtilService[key]);
+        const targetPath = Path.join(dir, newName)
         try {
-          fs.accessSync(path.join(dir));
+          FS.accessSync(Path.join(dir));
         } catch (error) {
-          fs.mkdirSync(path.join(dir));
+          FS.mkdirSync(Path.join(dir));
         }
-        const source = fs.createReadStream(file.filepath);
-        const target = fs.createWriteStream(targetPath);
-        await pump(source, target);
+        const source = FS.createReadStream(file.filepath);
+        const target = FS.createWriteStream(targetPath);
+        await Pump(source, target);
       }
     } finally {
       await ctx.cleanupRequestFiles();// delete those request tmp files
@@ -40,11 +40,23 @@ class ManageController extends Controller {
     }
     ctx.body = { fields, files }
   }
-  getFiles() {
+  async getFiles() {
     const { ctx } = this;
-    let filepaths = path.join(this.config.baseDir, `resource/${ctx.query.type}`)
-    
-    ctx.body = fs.readdirSync(imgpath)
+    ctx.body = await this.getAllFile(`resource/${ctx.query.type}`)
+  }
+  async getAllFile(path) {
+    let allFiles = [];
+    let getFile = (path) => {
+      let arr = FS.readdirSync(path)
+      arr.forEach(item => {
+        let itemPath = Path.join(path, item)
+        let state = FS.statSync(Path.join(this.config.baseDir, itemPath))
+        if (state.isDirectory()) getFile(itemPath)
+        else allFiles.push(itemPath);
+      })
+    };
+    getFile(path)
+    return allFiles;
   }
 }
 

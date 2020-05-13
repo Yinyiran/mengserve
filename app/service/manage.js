@@ -2,7 +2,7 @@ const Service = require("egg").Service;
 
 
 class ManageService extends Service {
-  async uploadFile() {
+  async getAllFile(path) {
 
   }
 }
