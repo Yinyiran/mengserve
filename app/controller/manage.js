@@ -5,11 +5,10 @@ const Pump = require('mz-modules/pump');
 const UtilService = require("../../service/utile")
 
 class ManageController extends Controller {
+  // 上传文件
   async uploadFile() {
     const { ctx } = this;
     const files = ctx.request.files;
-    // ctx.logger.warn('files: %j', files);
-
     try {
       for (const file of files) {
         const name = file.filename.toLowerCase();
@@ -30,7 +29,6 @@ class ManageController extends Controller {
     } finally {
       await ctx.cleanupRequestFiles();// delete those request tmp files
     }
-
     const fields = [];
     for (const k in ctx.request.body) {
       fields.push({
@@ -40,23 +38,25 @@ class ManageController extends Controller {
     }
     ctx.body = { fields, files }
   }
+  // 获取所有文件
   async getFiles() {
-    const { ctx } = this;
-    ctx.body = await this.getAllFile(`resource/${ctx.query.type}`)
+    const { ctx, service } = this;
+    ctx.body = await service.manage.getAllFile(`resource/${ctx.query.type}`)
   }
-  async getAllFile(path) {
-    let allFiles = [];
-    let getFile = (path) => {
-      let arr = FS.readdirSync(path)
-      arr.forEach(item => {
-        let itemPath = Path.join(path, item)
-        let state = FS.statSync(Path.join(this.config.baseDir, itemPath))
-        if (state.isDirectory()) getFile(itemPath)
-        else allFiles.push(itemPath);
-      })
-    };
-    getFile(path)
-    return allFiles;
+  // 删除文件
+  async deleteFile() {
+    const { ctx, service } = this;
+    ctx.body = service.manage.deleteFile(ctx.request.body.data);
+  }
+  // 删除文件
+  async getCompInfo() {
+    const { ctx, service } = this;
+    ctx.body = service.manage.getCompInfo(ctx.request.body.data);
+  }
+  // 保存企业信息
+  async saveCompInfo() {
+    const { ctx, service } = this;
+    ctx.body = service.manage.deleteFile(ctx.request.body.data);
   }
 }
 
