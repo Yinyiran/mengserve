@@ -5,6 +5,9 @@ class HomeService extends Service {
     const banners = await this.app.mysql.select('banner');
     return banners
   }
+  async getCompInfo(params) {
+    return await this.app.mysql.get('compInfo', params)
+  }
 }
 
 module.exports = HomeService;

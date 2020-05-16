@@ -22,13 +22,14 @@ class ManageService extends Service {
     let fullPath = Path.join(this.config.baseDir, path);
     return FS.unlinkSync(fullPath);
   }
-  async getCompInfo(params) {
-    const { app } = this;
-    return await app.mysql.insert('compInfo', params)
-  }
   async saveCompInfo(params) {
     const { app } = this;
-    return await app.mysql.insert('compInfo', params)
+    const options = {
+      where: {
+        CompID: params.CompID
+      }
+    };
+    return await app.mysql.update('compInfo', params, options)
   }
 }
 
