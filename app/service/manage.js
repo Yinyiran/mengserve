@@ -31,6 +31,26 @@ class ManageService extends Service {
     };
     return await app.mysql.update('compInfo', params, options)
   }
+
+  async getClassify() {
+    return await this.app.mysql.select('classify')
+  }
+  async saveClassify(params) {
+    const mysql = this.app.mysql;
+    if (params.ClassID) {
+      const options = {
+        where: {
+          ClassID: params.ClassID
+        }
+      };
+      return await mysql.update("classify", params, options)
+    } else {
+      return await mysql.insert("classify", params)
+    }
+  }
+  async delClassify(params) {
+    return await this.app.mysql.delete('classify', params)
+  }
 }
 
 module.exports = ManageService;

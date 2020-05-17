@@ -37,6 +37,21 @@ class ManageController extends Controller {
     const { ctx, service } = this;
     ctx.body = await service.manage.getAllFile(`resource/${ctx.query.type}`)
   }
+  // 获取所有文件
+  async getClassify() {
+    const { ctx, service } = this;
+    ctx.body = await service.manage.getClassify()
+  }
+  // 获取所有文件
+  async saveClassify() {
+    const { ctx, service } = this;
+    ctx.body = await service.manage.saveClassify(ctx.request.body)
+  }
+  // 获取所有文件
+  async delClassify() {
+    const { ctx, service } = this;
+    ctx.body = await service.manage.delClassify(ctx.request.body)
+  }
   // 删除文件
   async deleteFile() {
     const { ctx, service } = this;
