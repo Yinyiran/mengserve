@@ -39,17 +39,28 @@ class ManageService extends Service {
     const mysql = this.app.mysql;
     if (params.ClassID) {
       const options = {
-        where: {
-          ClassID: params.ClassID
-        }
+        where: { ClassID: params.ClassID }
       };
-      return await mysql.update("classify", params, options)
+      await mysql.update("classify", params, options)
+      return true;
     } else {
-      return await mysql.insert("classify", params)
+      params.SortID = 99999;
+      let result = await mysql.insert("classify", params);
+      return await mysql.get("classify", { ClassID: result.insertId })
     }
   }
   async delClassify(params) {
-    return await this.app.mysql.delete('classify', params)
+    await this.app.mysql.delete('classify', params)
+    return params
+  }
+  async sortClassify(params) {
+    for (let i = 0; i < parmas.length; i++) {
+      const options = {
+        where: { ClassID: params.ClassID }
+      };
+      await this.app.mysql.update('classify', { SortID: i }, options)
+
+    }
   }
 }
 

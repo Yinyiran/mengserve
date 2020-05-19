@@ -11,6 +11,7 @@ module.exports = app => {
   router.get("/api/getClassify", controller.manage.getClassify)
   router.post("/api/saveClassify", controller.manage.saveClassify)
   router.post("/api/delClassify", controller.manage.delClassify)
+  router.post("/api/sortClassify", controller.manage.sortClassify)
 
   // manage.js
   router.post("/api/saveCompInfo", controller.manage.saveCompInfo)
