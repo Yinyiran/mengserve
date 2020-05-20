@@ -33,7 +33,7 @@ class ManageService extends Service {
   }
 
   async getClassify() {
-    return await this.app.mysql.select('classify')
+    return await this.app.mysql.select('classify', { orders: [['SortID', 'asc'], ['ClassID', 'asc'],] })
   }
   async saveClassify(params) {
     const mysql = this.app.mysql;
@@ -54,12 +54,11 @@ class ManageService extends Service {
     return params
   }
   async sortClassify(params) {
-    for (let i = 0; i < parmas.length; i++) {
+    for (let i = 0; i < params.length; i++) {
       const options = {
-        where: { ClassID: params.ClassID }
+        where: { ClassID: params[i] }
       };
       await this.app.mysql.update('classify', { SortID: i }, options)
-
     }
   }
 }
