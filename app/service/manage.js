@@ -58,8 +58,20 @@ class ManageService extends Service {
       const options = {
         where: { ClassID: params[i] }
       };
-      await this.app.mysql.update('classify', { SortID: i }, options)
+      return await this.app.mysql.update('classify', { SortID: i }, options)
     }
+  }
+
+
+  // 产品
+  async getProducts() {
+    return await this.app.mysql.select("product")
+  }
+  async saveProduct() {
+    return await this.app.mysql.insert("product")
+  }
+  async delProducts() {
+    return await this.app.mysql.delete("product")
   }
 }
 
