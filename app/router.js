@@ -13,6 +13,11 @@ module.exports = app => {
   router.post("/api/delClassify", controller.manage.delClassify)
   router.post("/api/sortClassify", controller.manage.sortClassify)
 
+  // 新闻
+  router.get("/api/getArticles", controller.manage.getArticles)
+  router.post("/api/saveArticles", controller.manage.saveArticles)
+  router.post("/api/delArticle", controller.manage.delArticle)
+
   // manage.js
   router.post("/api/saveCompInfo", controller.manage.saveCompInfo)
 }

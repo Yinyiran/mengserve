@@ -61,6 +61,18 @@ class ManageService extends Service {
       await this.app.mysql.update('classify', { SortID: i }, options)
     }
   }
+  async getArticles() {
+    return await this.app.mysql.select("article")
+
+  }
+  async saveArticles(params) {
+    return await this.app.mysql.insert(params)
+
+  }
+  async delArticle(params) {
+    return await this.app.mysql.delete(params)
+
+  }
 }
 
 module.exports = ManageService;
