@@ -73,6 +73,18 @@ class ManageService extends Service {
   async delProducts() {
     return await this.app.mysql.delete("product")
   }
+  async getArticles() {
+    return await this.app.mysql.select("article")
+
+  }
+  async saveArticles(params) {
+    return await this.app.mysql.insert(params)
+
+  }
+  async delArticle(params) {
+    return await this.app.mysql.delete(params)
+
+  }
 }
 
 module.exports = ManageService;

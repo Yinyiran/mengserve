@@ -21,4 +21,11 @@ module.exports = app => {
   router.get("/api/getProducts", controller.manage.getProducts)
   router.post("/api/saveProduct", controller.manage.saveProduct)
   router.post("/api/delProducts", controller.manage.delProducts)
+  // 新闻
+  router.get("/api/getArticles", controller.manage.getArticles)
+  router.post("/api/saveArticles", controller.manage.saveArticles)
+  router.post("/api/delArticle", controller.manage.delArticle)
+
+  // manage.js
+  router.post("/api/saveCompInfo", controller.manage.saveCompInfo)
 }

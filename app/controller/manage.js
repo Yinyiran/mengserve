@@ -83,6 +83,23 @@ class ManageController extends Controller {
     const { ctx, service } = this;
     ctx.body = await service.manage.delProducts
   }
+  // 新闻
+  async getArticles() {
+    const { ctx, service } = this;
+    ctx.body = await service.manage.getArticles()
+
+  }
+  async saveArticles() {
+    const { ctx, service } = this;
+    ctx.body = await service.manage.saveArticles(ctx.request.body)
+
+  }
+  async delArticle() {
+    ctx.request.body
+    const { ctx, service } = this;
+    ctx.body = await service.manage.delArticle(ctx.request.body)
+
+  }
 }
 
 module.exports = ManageController;
