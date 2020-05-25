@@ -23,7 +23,7 @@ module.exports = app => {
   router.post("/api/delProducts", controller.manage.delProducts)
   // 新闻
   router.get("/api/getArticles", controller.manage.getArticles)
-  router.post("/api/saveArticles", controller.manage.saveArticles)
+  router.post("/api/saveArticle", controller.manage.saveArticle)
   router.post("/api/delArticle", controller.manage.delArticle)
 
   // manage.js

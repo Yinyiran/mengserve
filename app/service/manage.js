@@ -74,16 +74,27 @@ class ManageService extends Service {
     return await this.app.mysql.delete("product")
   }
   async getArticles() {
-    return await this.app.mysql.select("article")
+    return await this.app.mysql.select("article", { orders: [ ['ArtID', 'desc']] })
 
   }
-  async saveArticles(params) {
-    return await this.app.mysql.insert(params)
+  async saveArticle(params) {
+    if (params.ArtID) {
+      const options = {
+        where: { ArtID: params.ArtID }
+      };
+      return await this.app.mysql.update("article", params, options)
+    } else {
+      return await this.app.mysql.insert("article", params)
+    }
 
   }
   async delArticle(params) {
-    return await this.app.mysql.delete(params)
-
+    if (params.ArtID) {
+      await this.app.mysql.delete("article", params)
+      return params;
+    } else {
+      throw "ArtID is not required"
+    }
   }
 }
 

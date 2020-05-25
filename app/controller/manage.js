@@ -89,13 +89,12 @@ class ManageController extends Controller {
     ctx.body = await service.manage.getArticles()
 
   }
-  async saveArticles() {
+  async saveArticle() {
     const { ctx, service } = this;
-    ctx.body = await service.manage.saveArticles(ctx.request.body)
+    ctx.body = await service.manage.saveArticle(ctx.request.body)
 
   }
   async delArticle() {
-    ctx.request.body
     const { ctx, service } = this;
     ctx.body = await service.manage.delArticle(ctx.request.body)
 
