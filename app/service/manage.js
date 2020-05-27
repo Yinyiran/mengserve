@@ -65,7 +65,7 @@ class ManageService extends Service {
 
   // 产品
   async getProducts() {
-    return await this.app.mysql.select("product")
+    return await this.app.mysql.select("product", { orders: [['ProdID', 'desc']] })
   }
   async saveProduct() {
     return await this.app.mysql.insert("product")
@@ -74,7 +74,7 @@ class ManageService extends Service {
     return await this.app.mysql.delete("product")
   }
   async getArticles() {
-    return await this.app.mysql.select("article", { orders: [ ['ArtID', 'desc']] })
+    return await this.app.mysql.select("article", { orders: [['ArtID', 'desc']] })
 
   }
   async saveArticle(params) {

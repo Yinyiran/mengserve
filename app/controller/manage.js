@@ -73,15 +73,15 @@ class ManageController extends Controller {
   // 产品
   async getProducts() {
     const { ctx, service } = this;
-    ctx.body = await service.manage.getProducts
+    ctx.body = await service.manage.getProducts()
   }
   async saveProduct() {
     const { ctx, service } = this;
-    ctx.body = await service.manage.saveProduct
+    ctx.body = await service.manage.saveProduct()
   }
   async delProducts() {
     const { ctx, service } = this;
-    ctx.body = await service.manage.delProducts
+    ctx.body = await service.manage.delProducts()
   }
   // 新闻
   async getArticles() {
