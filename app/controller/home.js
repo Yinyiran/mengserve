@@ -8,10 +8,15 @@ class HomeController extends Controller {
   async products() {
     this.ctx.body = `kakka`
   }
-  // 删除文件
+  // 获取企业信息
   async getCompInfo() {
     const { ctx, service } = this;
     ctx.body = await service.home.getCompInfo(ctx.request.query);
+  }
+  // 获取企业信息
+  async getArticle() {
+    const { ctx, service } = this;
+    ctx.body = await service.home.getArticle(ctx.request.query);
   }
 }
 

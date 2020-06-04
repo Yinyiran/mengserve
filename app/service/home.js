@@ -8,6 +8,12 @@ class HomeService extends Service {
   async getCompInfo(params) {
     return await this.app.mysql.get('compInfo', params)
   }
+  async getArticle(params) {
+    let whereParam = {}
+    if (params.id) whereParam.ArtID = params.id;
+    if (params.isStar) whereParam.ArtStar = params.isStar;
+    return await this.app.mysql.select('article', { where: whereParam })
+  }
 }
 
 module.exports = HomeService;
