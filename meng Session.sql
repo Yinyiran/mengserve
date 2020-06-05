@@ -6,7 +6,7 @@ create table product (
   Classify int(10),
   ProdIntro text,
   Property text,
-  ProdImg lang
+  ProdImg long
 )
 alter table product auto_increment = 10000;
 
@@ -24,8 +24,6 @@ insert into product (ProdName,Classify,ProdIntro,Property,ProdImg) values (
 )
 
 desc product
-
-
 
 
 
