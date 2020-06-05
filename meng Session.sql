@@ -14,7 +14,8 @@ alter table product change ProdID ProdID int(10) auto_increment
 
 alter table product add ProdImg long;
 
-select * from product
+select * from product\
+
 insert into product (ProdName,Classify,ProdIntro,Property,ProdImg) values (
   "冰桶",
   1000,
@@ -35,7 +36,11 @@ create table article (
   ArtStar tinyint(1)
 )
 alter table article auto_increment = 10000;
+
+alter table article add ArtCover varchar(100);
+
 desc article
+
 insert into article (ArtTitle, ArtIntro, ArtContent, ArtStar)
 values
   (
