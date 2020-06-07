@@ -96,6 +96,16 @@ class ManageService extends Service {
       throw "ArtID is not required"
     }
   }
+  async saveBanner(params) {
+    if (params.BanID) {
+      const options = {
+        where: { BanID: params.BanID }
+      };
+      return await this.app.mysql.update("banner", params, options)
+    } else {
+      return await this.app.mysql.insert("banner", params)
+    }
+  }
 }
 
 module.exports = ManageService;

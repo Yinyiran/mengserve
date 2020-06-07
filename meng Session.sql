@@ -14,7 +14,7 @@ alter table product change ProdID ProdID int(10) auto_increment
 
 alter table product add ProdImg long;
 
-select * from product\
+select * from product
 
 insert into product (ProdName,Classify,ProdIntro,Property,ProdImg) values (
   "冰桶",
@@ -41,21 +41,16 @@ alter table article add ArtCover varchar(100);
 
 desc article
 
-insert into article (ArtTitle, ArtIntro, ArtContent, ArtStar)
-values
-  (
-    "文章测试，功能比较多？试试吧",
-    "可以写公司简介 ， 联系我们 ， 客户评价等",
-    "文章测试 ， 功能比较多 ？ 试试吧,可以写公司简介 ， 联系我们 ， 客户评价等，文章测试 ， 功能比较多 ？ 试试吧,
-    可以写公司简介 ， 联系我们 ， 客户评价等文章测试 ， 功能比较多 ？ 试试吧,
-    可以写公司简介 ， 联系我们 ， 客户评价等文章测试 ， 功能比较多 ？ 试试吧,
-    可以写公司简介 ， 联系我们 ， 客户评价等文章测试 ， 功能比较多 ？ 试试吧,
-    可以写公司简介 ， 联系我们 ， 客户评价等文章测试 ， 功能比较多 ？ 试试吧,
-    可以写公司简介 ， 联系我们 ， 客户评价等文章测试 ， 功能比较多 ？ 试试吧,
-    可以写公司简介 ， 联系我们 ， 客户评价等文章测试 ， 功能比较多 ？ 试试吧,
-    可以写公司简介 ， 联系我们 ， 客户评价等文章测试 ， 功能比较多 ？ 试试吧,
-    可以写公司简介 ， 联系我们 ， 客户评价等",
-    1
-  )
+select * from article;
 
-  select * from article
+desc banner;
+
+alter table banner change BanImgID BanImg varchar(255) not null;
+alter table banner change BanType BanType int(1) default 1;
+alter table banner auto_increment = 10000;
+alter table banner add BanIntro varchar(200);
+
+update banner set BanImg = "resource/img/2020-06-03/1591175135950.jpg"
+
+select * from banner;
+insert into banner (BanTargID,BanImg) values (123134,"resource/2020-06-03/1591175135950.jpg")

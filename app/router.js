@@ -1,7 +1,7 @@
 module.exports = app => {
   const { router, controller } = app;
   // index.js
-  router.get("/api/banner", controller.home.banner)
+  router.get("/api/getBanner", controller.home.banner);
   // 信息
   router.get("/api/getCompInfo", controller.home.getCompInfo)
   router.post("/api/saveCompInfo", controller.manage.saveCompInfo)
@@ -10,7 +10,6 @@ module.exports = app => {
   router.get("/api/getFiles", controller.manage.getFiles)
   router.post("/api/uploadFile", controller.manage.uploadFile)
   router.post("/api/deleteFile", controller.manage.deleteFile)
-
 
   // 类型
   router.get("/api/getClassify", controller.manage.getClassify)
@@ -31,4 +30,6 @@ module.exports = app => {
 
   // manage.js
   router.post("/api/saveCompInfo", controller.manage.saveCompInfo)
+  router.post("/api/saveBanner", controller.manage.saveBanner);
+
 }

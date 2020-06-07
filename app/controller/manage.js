@@ -99,6 +99,11 @@ class ManageController extends Controller {
     ctx.body = await service.manage.delArticle(ctx.request.body)
 
   }
+  async saveBanner() {
+    const { ctx, service } = this;
+    ctx.body = await service.manage.saveBanner(ctx.request.body)
+
+  }
 }
 
 module.exports = ManageController;
