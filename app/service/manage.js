@@ -58,6 +58,8 @@ class ManageService extends Service {
       const options = {
         where: { ClassID: params[i] }
       };
+      console.log(options)
+      console.log(i)
       return await this.app.mysql.update('classify', { SortID: i }, options)
     }
   }

@@ -45,7 +45,7 @@ select * from article;
 
 desc banner;
 
-alter table banner change BanImgID BanImg varchar(255) not null;
+alter table banner modify BanImg varchar(255) not null;
 alter table banner change BanType BanType int(1) default 1;
 alter table banner auto_increment = 10000;
 alter table banner add BanIntro varchar(200);
@@ -53,4 +53,16 @@ alter table banner add BanIntro varchar(200);
 update banner set BanImg = "resource/img/2020-06-03/1591175135950.jpg"
 
 select * from banner;
-insert into banner (BanTargID,BanImg) values (123134,"resource/2020-06-03/1591175135950.jpg")
+insert into banner (BanTargID,BanImg) values (123134,"resource/img/2020-06-03/1591175135950.jpg")
+
+create temporary table tmp(id int(4) primary key, dr varchar(50));
+insert into tmp
+values
+  (0, 'gone'),
+  (1, 'xx'),...(m, 'yy');
+update test_tbl,
+  tmp
+set
+  test_tbl.dr = tmp.dr
+where
+  test_tbl.id = tmp.id;
