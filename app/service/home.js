@@ -12,7 +12,7 @@ class HomeService extends Service {
     let whereParam = {}
     if (params.id) whereParam.ArtID = params.id;
     if (params.isStar) whereParam.ArtStar = params.isStar;
-    return await this.app.mysql.select('article', { where: whereParam })
+    return await this.app.mysql.select('article', { where: whereParam, orders: [['ArtID', 'desc']] })
   }
 }
 

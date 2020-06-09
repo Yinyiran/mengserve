@@ -75,10 +75,7 @@ class ManageService extends Service {
   async delProducts() {
     return await this.app.mysql.delete("product")
   }
-  async getArticles() {
-    return await this.app.mysql.select("article", { orders: [['ArtID', 'desc']] })
 
-  }
   async saveArticle(params) {
     if (params.ArtID) {
       const options = {
@@ -107,6 +104,10 @@ class ManageService extends Service {
     } else {
       return await this.app.mysql.insert("banner", params)
     }
+  }
+  async delBanner(params) {
+    await this.app.mysql.delete("banner", { BanID: params.id })
+    return params;
   }
 }
 

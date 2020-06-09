@@ -48,7 +48,7 @@ desc banner;
 alter table banner modify BanImg varchar(255) not null;
 alter table banner change BanType BanType int(1) default 1;
 alter table banner auto_increment = 10000;
-alter table banner add BanIntro varchar(200);
+alter table banner drop BanIntro ;
 
 update banner set BanImg = "resource/img/2020-06-03/1591175135950.jpg"
 

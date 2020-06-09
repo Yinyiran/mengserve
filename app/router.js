@@ -24,12 +24,13 @@ module.exports = app => {
 
   // 新闻
   router.get("/api/getArticle", controller.home.getArticle)
-  router.get("/api/getArticles", controller.manage.getArticles)
   router.post("/api/saveArticle", controller.manage.saveArticle)
   router.post("/api/delArticle", controller.manage.delArticle)
 
   // manage.js
   router.post("/api/saveCompInfo", controller.manage.saveCompInfo)
+  // 轮播图
   router.post("/api/saveBanner", controller.manage.saveBanner);
+  router.post("/api/delBanner", controller.manage.delBanner);
 
 }

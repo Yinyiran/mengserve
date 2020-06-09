@@ -83,12 +83,7 @@ class ManageController extends Controller {
     const { ctx, service } = this;
     ctx.body = await service.manage.delProducts()
   }
-  // 新闻
-  async getArticles() {
-    const { ctx, service } = this;
-    ctx.body = await service.manage.getArticles()
 
-  }
   async saveArticle() {
     const { ctx, service } = this;
     ctx.body = await service.manage.saveArticle(ctx.request.body)
@@ -99,10 +94,14 @@ class ManageController extends Controller {
     ctx.body = await service.manage.delArticle(ctx.request.body)
 
   }
+  // 轮播图
   async saveBanner() {
     const { ctx, service } = this;
     ctx.body = await service.manage.saveBanner(ctx.request.body)
-
+  }
+  async delBanner() {
+    const { ctx, service } = this;
+    ctx.body = await service.manage.delBanner(ctx.request.body)
   }
 }
 
