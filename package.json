@@ -5,7 +5,8 @@
   "author": "chrisgad",
   "license": "MIT",
   "scripts": {
-    "serve": "egg-bin dev"
+    "serve": "egg-bin dev",
+    "debug": "egg-bin debug"
   },
   "dependencies": {
     "egg": "^2.26.0",

@@ -10,7 +10,6 @@ class ManageController extends Controller {
     const { ctx } = this;
     const files = ctx.request.files;
     console.log(files)
-    // eggjs extension
     return
     let servePaths = []
     try {
