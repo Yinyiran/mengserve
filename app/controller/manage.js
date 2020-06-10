@@ -9,6 +9,9 @@ class ManageController extends Controller {
   async uploadFile() {
     const { ctx } = this;
     const files = ctx.request.files;
+    console.log(files)
+    // eggjs extension
+    return
     let servePaths = []
     try {
       for (const file of files) {

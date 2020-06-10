@@ -54,14 +54,11 @@ class ManageService extends Service {
     return params
   }
   async sortClassify(params) {
-    for (let i = 0; i < params.length; i++) {
-      const options = {
-        where: { ClassID: params[i] }
-      };
-      console.log(options)
-      console.log(i)
-      return await this.app.mysql.update('classify', { SortID: i }, options)
-    }
+    let connect = this.app.mysql
+    let ids = params.map(item => connect.escape(item))
+    let values = ids.map((item, index) => `WHEN ${item} THEN ${index + 1}`).join(" ");
+    let query = `UPDATE classify SET SortID = CASE ClassID ${values} END WHERE ClassID in (${ids.join()})`
+    return await this.app.mysql.query(query)
   }
 
 

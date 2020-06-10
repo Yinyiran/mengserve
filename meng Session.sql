@@ -1,3 +1,4 @@
+desc classify;
 select * from Classify
 
 create table product (
