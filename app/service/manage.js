@@ -1,7 +1,8 @@
 const Service = require("egg").Service;
 const FS = require('fs');
 const Path = require('path');
-
+const Pump = require('mz-modules/pump');
+const UtilService = require("../../service/utile")
 
 class ManageService extends Service {
   async getAllFile(path) {
@@ -17,6 +18,46 @@ class ManageService extends Service {
     };
     getFile(path)
     return allFiles;
+  }
+  async fileExist(hashs) {
+    let list = await this.app.mysql.select('file', { where: { FileHash: hashs } });
+    let res = {}
+    list.forEach(item => {
+      res[item.FileHash] = item.FilePath;
+    });
+    return res;
+  }
+  async uploadFile(ctx) {
+    let servePaths = [];
+    let body = ctx.request.body;
+    let files = ctx.request.files;
+    let connect = this.app.mysql
+    let paramArr = []
+    try {
+      for (const file of files) {
+        const name = file.filename.toLowerCase();
+        let ext = name.slice(name.lastIndexOf("."));
+        let newName = new Date().getTime() + ext
+        let basePath = UtilService[`${body.type}Path`];
+        let dir = Path.join(this.config.baseDir, basePath);
+        try {
+          FS.accessSync(dir);
+        } catch (error) {
+          FS.mkdirSync(dir);
+        }
+        const source = FS.createReadStream(file.filepath);
+        const target = FS.createWriteStream(Path.join(dir, newName));
+        await Pump(source, target);
+        let servePath = Path.join(basePath, newName)
+        servePaths.push(servePath)
+        paramArr.push(`(null, ${connect.escape(body[file.field])} , '${servePath}')`);
+      }
+      let query = `insert into file values ${paramArr.join()}`
+      await connect.query(query);
+    } finally {
+      await ctx.cleanupRequestFiles();// delete those request tmp files
+    }
+    return servePaths;
   }
   async deleteFile(path) {
     let fullPath = Path.join(this.config.baseDir, path);
@@ -58,7 +99,7 @@ class ManageService extends Service {
     let ids = params.map(item => connect.escape(item))
     let values = ids.map((item, index) => `WHEN ${item} THEN ${index + 1}`).join(" ");
     let query = `UPDATE classify SET SortID = CASE ClassID ${values} END WHERE ClassID in (${ids.join()})`
-    return await this.app.mysql.query(query)
+    return await connect.query(query)
   }
 
 

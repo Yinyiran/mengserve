@@ -10,6 +10,7 @@ module.exports = app => {
   router.get("/api/getFiles", controller.manage.getFiles)
   router.post("/api/uploadFile", controller.manage.uploadFile)
   router.post("/api/deleteFile", controller.manage.deleteFile)
+  router.post("/api/fileExist", controller.manage.fileExist)
 
   // 类型
   router.get("/api/getClassify", controller.manage.getClassify)

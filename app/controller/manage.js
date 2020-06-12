@@ -1,37 +1,15 @@
 const Controller = require("egg").Controller;
-const FS = require('fs');
-const Path = require('path');
-const Pump = require('mz-modules/pump');
-const UtilService = require("../../service/utile")
 
 class ManageController extends Controller {
+  // 根据filehash 判断文件是否已经上传
+  async fileExist() {
+    const { ctx, service } = this;
+    ctx.body = await service.manage.fileExist(ctx.request.body)
+  }
   // 上传文件
   async uploadFile() {
-    const { ctx } = this;
-    const files = ctx.request.files;
-    console.log(files)
-    return
-    let servePaths = []
-    try {
-      for (const file of files) {
-        const name = file.filename.toLowerCase();
-        let ext = name.slice(name.lastIndexOf("."));
-        let newName = new Date().getTime() + ext
-        let key = ctx.request.body.type + "Path";
-        let dir = Path.join(this.config.baseDir, UtilService[key]);
-        try {
-          FS.accessSync(dir);
-        } catch (error) {
-          FS.mkdirSync(dir);
-        }
-        const source = FS.createReadStream(file.filepath);
-        const target = FS.createWriteStream(Path.join(dir, newName));
-        await Pump(source, target);
-        servePaths.push(Path.join(UtilService[key], newName))
-      }
-    } finally {
-      await ctx.cleanupRequestFiles();// delete those request tmp files
-    }
+    const { ctx, service } = this;
+    let servePaths = await service.manage.uploadFile(ctx)
     ctx.body = servePaths;
   }
   // 获取所有文件
