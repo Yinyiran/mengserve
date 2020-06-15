@@ -66,12 +66,6 @@ alter table file auto_increment = 10000;
 
 desc file
 
-insert into file (FileHash,FilePath) values ("234523456346uetd","resource/img/2020-06-03/1591175135950.jpg")
-
 select * from file
 
-delete from file where FileID in (10003)
-
-update file set FileHash = "67ujdrgj5667dfghi045y9hnslfbm" where FileID in (10000)
-
-select * from file where FileHash in ("67ujdrgj5667dfghi045y9hnslfbm","12000");
+alter table compinfo modify CompLogo long not null;

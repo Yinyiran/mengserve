@@ -1,6 +1,7 @@
 const Controller = require("egg").Controller;
 
 class ManageController extends Controller {
+  // ------ 文件 -------
   // 根据filehash 判断文件是否已经上传
   async fileExist() {
     const { ctx, service } = this;
@@ -17,7 +18,15 @@ class ManageController extends Controller {
     const { ctx, service } = this;
     ctx.body = await service.manage.getAllFile(`resource/${ctx.query.type}`)
   }
-  // 获取所有文件
+  // 删除文件
+  async deleteFile() {
+    const { ctx, service } = this;
+    ctx.body = service.manage.deleteFile(ctx.request.body.FilePath);
+  }
+
+
+  // ------ 分类 -------
+  // 获取所有类
   async getClassify() {
     const { ctx, service } = this;
     ctx.body = await service.manage.getClassify()
@@ -39,11 +48,6 @@ class ManageController extends Controller {
   }
 
 
-  // 删除文件
-  async deleteFile() {
-    const { ctx, service } = this;
-    ctx.body = service.manage.deleteFile(ctx.request.body.data);
-  }
   // 保存企业信息
   async saveCompInfo() {
     const { ctx, service } = this;

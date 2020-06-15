@@ -13,7 +13,7 @@ class ManageService extends Service {
         let itemPath = Path.join(path, item)
         let state = FS.statSync(Path.join(this.config.baseDir, itemPath))
         if (state.isDirectory()) getFile(itemPath)
-        else allFiles.push(itemPath);
+        else allFiles.push(itemPath.replace(/\\/g, "/"));
       })
     };
     getFile(path)
@@ -59,6 +59,7 @@ class ManageService extends Service {
     return servePaths;
   }
   async deleteFile(path) {
+    await this.app.mysql.delete("file", { FilePath: path })
     let fullPath = Path.join(this.config.baseDir, path);
     return FS.unlinkSync(fullPath);
   }
