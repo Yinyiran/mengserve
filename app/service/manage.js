@@ -28,11 +28,10 @@ class ManageService extends Service {
     return res;
   }
   async uploadFile(ctx) {
+    let paramArr = [];
     let servePaths = [];
-    let body = ctx.request.body;
-    let files = ctx.request.files;
+    const { body, files } = ctx.request;
     let connect = this.app.mysql
-    let paramArr = []
     try {
       for (const file of files) {
         const name = file.filename.toLowerCase();
@@ -48,9 +47,9 @@ class ManageService extends Service {
         const source = FS.createReadStream(file.filepath);
         const target = FS.createWriteStream(Path.join(dir, newName));
         await Pump(source, target);
-        let servePath = Path.join(basePath, newName)
-        servePaths.push(servePath)
-        paramArr.push(`(null, ${connect.escape(body[file.field])} , '${servePath}')`);
+        let serPath = Path.join(basePath, newName).replace(/\\/g, "/");
+        servePaths.push(serPath)
+        paramArr.push(`(null, ${connect.escape(body[file.field])} , '${serPath}')`);
       }
       let query = `insert into file values ${paramArr.join()}`
       await connect.query(query);
