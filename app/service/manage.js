@@ -143,6 +143,13 @@ class ManageService extends Service {
       return await this.app.mysql.insert("banner", params)
     }
   }
+  async sortBanner(params) {
+    let connect = this.app.mysql
+    let ids = params.map(item => connect.escape(item))
+    let values = ids.map((item, index) => `WHEN ${item} THEN ${index + 1}`).join(" ");
+    let query = `UPDATE banner SET SortID = CASE BanID ${values} END WHERE BanID in (${ids.join()})`
+    return await connect.query(query)
+  }
   async delBanner(params) {
     await this.app.mysql.delete("banner", { BanID: params.id })
     return params;

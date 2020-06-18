@@ -2,7 +2,7 @@ const Service = require('egg').Service
 
 class HomeService extends Service {
   async getBanner() {
-    const banners = await this.app.mysql.select('banner');
+    const banners = await this.app.mysql.select('banner', { orders: [['SortID', 'asc'], ['BanID', 'asc'],] });
     return banners
   }
   async getCompInfo(params) {

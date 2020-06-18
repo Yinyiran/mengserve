@@ -30,8 +30,10 @@ module.exports = app => {
 
   // manage.js
   router.post("/api/saveCompInfo", controller.manage.saveCompInfo)
+
   // 轮播图
   router.post("/api/saveBanner", controller.manage.saveBanner);
   router.post("/api/delBanner", controller.manage.delBanner);
+  router.post("/api/sortBanner", controller.manage.sortBanner);
 
 }

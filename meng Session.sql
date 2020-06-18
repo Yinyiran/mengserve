@@ -51,6 +51,7 @@ alter table banner change BanType BanType int(1) default 1;
 alter table banner auto_increment = 10000;
 alter table banner drop BanIntro ;
 alter table banner modify BanType int(1) not null ;
+alter table banner change SortID SortID int(2) default 99 ;
 
 update banner set BanType = 2 where banid in (10009,10011)
 update banner set BanType = 1 where banid in (10010)

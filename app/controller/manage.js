@@ -83,6 +83,10 @@ class ManageController extends Controller {
     const { ctx, service } = this;
     ctx.body = await service.manage.saveBanner(ctx.request.body)
   }
+  async sortBanner() {
+    const { ctx, service } = this;
+    ctx.body = await service.manage.sortBanner(ctx.request.body)
+  }
   async delBanner() {
     const { ctx, service } = this;
     ctx.body = await service.manage.delBanner(ctx.request.body)
