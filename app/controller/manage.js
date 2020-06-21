@@ -29,7 +29,7 @@ class ManageController extends Controller {
   // 获取所有类
   async getClassify() {
     const { ctx, service } = this;
-    ctx.body = await service.manage.getClassify()
+    ctx.body = await service.manage.getClassify(ctx.query)
   }
   // 获取所有文件
   async saveClassify() {
@@ -61,11 +61,11 @@ class ManageController extends Controller {
   }
   async saveProduct() {
     const { ctx, service } = this;
-    ctx.body = await service.manage.saveProduct()
+    ctx.body = await service.manage.saveProduct(ctx.request.body)
   }
   async delProducts() {
     const { ctx, service } = this;
-    ctx.body = await service.manage.delProducts()
+    ctx.body = await service.manage.delProducts(ctx.request.body)
   }
 
   async saveArticle() {

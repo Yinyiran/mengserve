@@ -107,11 +107,19 @@ class ManageService extends Service {
   async getProducts() {
     return await this.app.mysql.select("product", { orders: [['ProdID', 'desc']] })
   }
-  async saveProduct() {
-    return await this.app.mysql.insert("product")
+  async saveProduct(params) {
+    if (params.ProdID) {
+      const options = {
+        where: { ProdID: params.ProdID }
+      };
+      return await this.app.mysql.update("product", params, options)
+    } else {
+      return await this.app.mysql.insert("product", params)
+    }
   }
-  async delProducts() {
-    return await this.app.mysql.delete("product")
+  async delProducts(params) {
+    await this.app.mysql.delete("product", { ProdID: params.ID })
+    return params;
   }
 
   async saveArticle(params) {
@@ -123,7 +131,6 @@ class ManageService extends Service {
     } else {
       return await this.app.mysql.insert("article", params)
     }
-
   }
   async delArticle(params) {
     if (params.ArtID) {

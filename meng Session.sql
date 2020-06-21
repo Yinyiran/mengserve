@@ -14,6 +14,8 @@ alter table product auto_increment = 10000;
 alter table product change ProdID ProdID int(10) auto_increment
 
 alter table product add ProdImg long;
+alter table product add ProdContent long;
+alter table product add ProdStar tinyint(1);
 
 select * from product
 
