@@ -13,19 +13,11 @@ alter table product auto_increment = 10000;
 
 alter table product change ProdID ProdID int(10) auto_increment
 
-alter table product add ProdImg long;
-alter table product add ProdContent long;
+alter table product change ProdImg ProdImg long;
+alter table product change ProdContent ProdContent LONGTEXT;
 alter table product add ProdStar tinyint(1);
 
 select * from product
-
-insert into product (ProdName,Classify,ProdIntro,Property,ProdImg) values (
-  "冰桶",
-  1000,
-  "保温啤酒桶",
-  "lall",
-  "img"
-)
 
 desc product
 
@@ -41,6 +33,8 @@ create table article (
 alter table article auto_increment = 10000;
 
 alter table article add ArtCover varchar(100);
+alter table article change ArtCover ArtCover text;
+alter table article change ArtContent ArtContent LONGTEXT;
 
 desc article
 
@@ -53,7 +47,7 @@ alter table banner change BanType BanType int(1) default 1;
 alter table banner auto_increment = 10000;
 alter table banner drop BanIntro ;
 alter table banner modify BanType int(1) not null ;
-alter table banner change SortID SortID int(2) default 99 ;
+alter table banner add SortID int(2) default 99 ;
 
 update banner set BanType = 2 where banid in (10009,10011)
 update banner set BanType = 1 where banid in (10010)
