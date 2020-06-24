@@ -68,3 +68,9 @@ desc file
 select * from file
 
 alter table compinfo modify CompLogo long not null;
+
+desc article
+
+alter table article change CreateTime CreateTime timestamp(0) not null default  CURRENT_TIMESTAMP
+alter table article change CreateTime CreateTime timestamp(0) not null default  CURRENT_TIMESTAMP
+alter table article add UpdateTime timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMPw
