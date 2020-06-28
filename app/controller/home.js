@@ -5,9 +5,6 @@ class HomeController extends Controller {
     const { ctx, service } = this;
     ctx.body = await service.home.getBanner();
   }
-  async products() {
-    this.ctx.body = `kakka`
-  }
   // 获取企业信息
   async getCompInfo() {
     const { ctx, service } = this;

@@ -19,7 +19,8 @@ module.exports = app => {
   router.post("/api/sortClassify", controller.manage.sortClassify)
 
   // 产品
-  router.get("/api/getProducts", controller.manage.getProducts)
+  router.get("/api/getProdList", controller.manage.getProdList)
+  router.get("/api/getProduct", controller.manage.getProduct)
   router.post("/api/saveProduct", controller.manage.saveProduct)
   router.post("/api/delProducts", controller.manage.delProducts)
 

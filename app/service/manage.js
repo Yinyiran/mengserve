@@ -104,8 +104,16 @@ class ManageService extends Service {
 
 
   // 产品
-  async getProducts() {
-    return await this.app.mysql.select("product", { orders: [['ProdID', 'desc']] })
+  async getProduct(param) {
+    return await this.app.mysql.select("product", { where: param })
+  }
+  async getProdList(param) {
+    let query = {
+      orders: [['ProdID', 'desc']],
+      where: param,
+      columns: ['ProdID', 'ProdName', 'ProdStar', 'Classify', 'ProdImg']
+    }
+    return await this.app.mysql.select("product", query)
   }
   async saveProduct(params) {
     if (params.ProdID) {
