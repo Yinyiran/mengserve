@@ -73,3 +73,8 @@ desc article
 
 alter table article change CreateTime CreateTime DATETIME not null default  CURRENT_TIMESTAMP
 alter table article add UpdateTime datetime NOT NULL DEFAULT DATETIME ON UPDATE CURRENT_TIMESTAMP
+
+
+desc compinfo
+
+alter table compinfo add AboutID int(20);
