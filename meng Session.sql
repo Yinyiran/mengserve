@@ -78,3 +78,10 @@ alter table article add UpdateTime datetime NOT NULL DEFAULT DATETIME ON UPDATE 
 desc compinfo
 
 alter table compinfo add AboutID int(20);
+
+create table sku (
+  SkuID int(20) not null auto_increment primary key;
+  ProdID int(20) not null;
+  SkuImg long not null;
+  SkuProps long not null
+)
