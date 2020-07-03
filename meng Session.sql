@@ -86,5 +86,5 @@ create table sku (
   SkuImg long not null,
   SkuProps long not null
 )
-drop table sku
+
 desc sku
