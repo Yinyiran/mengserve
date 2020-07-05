@@ -108,74 +108,96 @@ class ManageService extends Service {
     return await this.app.mysql.select("product", { where: param })
   }
   async getProdList(param) {
+    const con = this.app.mysql;
     let query = {
       orders: [['ProdID', 'desc']],
       where: param,
       columns: ['ProdID', 'ProdName', 'ProdStar', 'Classify', 'ProdImg']
     }
-    return await this.app.mysql.select("product", query)
+    let prodList = await con.select("product", query);
+    let prodIDs = prodList.map(prod => prod.ProdID);
+    if (prodIDs.length) {
+      const skuList = await con.select("sku", { where: { ProdID: prodIDs } });
+      let idSku = {}
+      skuList.forEach(item => {
+        if (idSku[item.ProdID]) idSku[item.ProdID].push(item);
+        else idSku[item.ProdID] = [item];
+      });
+      prodList.forEach(prod => {
+        prod.SkuList = idSku[prod.ProdID] || []
+      });
+    }
+    return prodList;
   }
   async saveProduct(params) {
-    let bosy = {
-      Classify: 1012,
-      ProdContent: "<p>产品1型号B产品1产品1产品1产品1产品1产品1产品1产品1产品1产品1产品1产品1产品1产品1</p>",
-      ProdID: undefined,
-      ProdIntro: "产品1产品1产品1",
-      ProdName: "产品1",
-      ProdStar: 1,
-      Property: `{"K1":"V1"}`,
-      SkuList: [
-        {
-          Property: `{"K2":"V2"}`,
-          SkuImgs: ["resource/img/2020-06-15/1592215243552.jpg", "resource/img/2020-06-12/1591957337284.gif", "resource/img/2020-07-03/1593765948450.png"],
-          SkuName: "型号A",
-          isMain: 1,
-        }, {
-          Property: `{"K21":"V21"}`,
-          SkuImgs: ["resource/img/2020-07-01/1593572819149.jpg", "resource/img/2020-07-03/1593765948783.jpg"],
-          SkuName: "型号B",
-          isMain: 0,
-        }
-      ]
-    }
     const conn = await this.app.mysql.beginTransaction();
     try {
       if (params.ProdID) {
         const options = {
           where: { ProdID: params.ProdID }
         };
-        // await this.app.mysql.update("product", params, options)
         const { ProdContent, ProdID, ProdIntro, ProdName, ProdStar, Property } = params;
         let prodParam = { ProdContent, ProdID, ProdIntro, ProdName, ProdStar, Property }
-        let res = await conn.update("product", prodParam, options);
+        let { insertId } = await conn.update("product", prodParam, options);
 
         let updateArr = []
         let newArr = []
-        let skuColumn = "(ProdContent, ProdID, ProdIntro, ProdName, ProdStar, Property)"
+        let skuColumn = ["SkuID", "ProdID", "IsMain", "SkuImg", "SkuProps"]
         params.SkuList.forEach(sku => {
-          if (sku.SkuID) updateArr.push(`(null, ${connect.escape(body[file.field])}`);
-          else newArr.push(`(null, ${connect.escape(body[file.field])}`);
+          let str = ""
+          skuColumn.forEach(col => {
+            str += `${sku[col] || null},`
+          });
+          if (sku.SkuID) {
+            updateArr.push(`WHEN ${sku.SkuID} THEN ${str}`);
+          } else {
+            newArr.push(`(${str.slice(0, -1)})`);
+          }
         })
-        await conn.insert("sku", row2);  // 第二步操作
-        await conn.update("sku", row2);  // 第二步操作
-        let query = `insert into file ${skuColumn} values ${paramArr.join()}`
-        await connect.query(query);
+        // 新建
+        const newSkuIDs = []
+        if (newArr.length) {
+          let list = await conn.query(`insert into sku (${skuColumn.join()}) values (${newArr.join()})`);
+          newSkuIDs = list.map(item => item.insertId)
+        } else {
+          // 修改
+          let updateQuery = `UPDATE sku SET SortID = CASE ClassID ${updateArr.join(" ")} END WHERE ClassID in (${ids.join()})`
+          await conn.query("sku", updateQuery);
+        }
         await conn.commit(); // 提交事务
-        return { ProdID: res.insertId };
+        return { ProdID: insertId, skuId: newSkuIDs };
       } else {
-        // 
-        return await this.app.mysql.insert("product", params)
-        await conn.insert("product", row1);  // 第一步操作
-        await conn.update("product", row2);  // 第二步操作
+        const { ProdContent, ProdID, ProdIntro, ProdName, ProdStar, Property } = params;
+        let prodParam = { ProdContent, ProdID, ProdIntro, ProdName, ProdStar, Property }
+        let { insertId } = await conn.insert("product", prodParam);
+        let newArr = []
+        let skuColumn = ["ProdID", "IsMain", "SkuImg", "SkuProps", "SkuName"]
+        params.SkuList.forEach(sku => {
+          let str = ""
+          skuColumn.forEach(col => {
+            if (col === "ProdID") str += `${insertId},`
+            else str += `${conn.escape(sku[col])},`
+          });
+          newArr.push(`(${str.slice(0, -1)})`);
+        })
+        // 新建
+        const querystr = `insert into sku (${skuColumn.join()}) values ${newArr.join()}`
+        const skuList = await conn.query(querystr);
         await conn.commit(); // 提交事务
+        return { ProdID: insertId, skuList };
       }
     } catch (error) {
       await conn.rollback()
       throw error
     }
   }
+  async insertSku(skuList) {
+
+  }
   async delProducts(params) {
-    await this.app.mysql.delete("product", { ProdID: params.ID })
+    const con = this.app.mysql;
+    await con.delete("product", { ProdID: params.ID });
+    await con.delete("sku", { ProdID: params.ID });
     return params;
   }
 
