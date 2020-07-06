@@ -79,7 +79,10 @@ create table sku (
   SkuImg long not null,
   SkuProps long not null
 );
+drop TABLE sku;
 desc sku;
+select *
+from sku;
 insert into sku (SkuID, ProdID, IsMain, SkuImg, SkuProps)
 values (
     null,
@@ -88,8 +91,5 @@ values (
     'resource/img/2020-07-02/1593701231193.jpg',
     '{\"querystr\":\"querystr\"}'
   );
-select *
-from sku;
-
-
-insert into sku (ProdID,IsMain,SkuImg,SkuProps,SkuName) values (10018,1,'','{\"con.commit()\":\"con.commit()\"}')
+insert into sku (ProdID, IsMain, SkuImg, SkuProps, SkuName)
+values (10018, 1, '', '{\"con.commit()\":\"con.commit()\"}')
