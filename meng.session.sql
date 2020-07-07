@@ -1,13 +1,15 @@
 desc classify;
 select *
-from Classify create table product (
-    ProdID int(10) not null PRIMARY KEY,
-    ProdName varchar(100) not null,
-    Classify int(10),
-    ProdIntro text,
-    Property text,
-    ProdImg long
-  );
+from Classify;
+alter TABLE classify MODIFY ParentID
+create table product (
+  ProdID int(10) not null PRIMARY KEY,
+  ProdName varchar(100) not null,
+  Classify int(10),
+  ProdIntro text,
+  Property text,
+  ProdImg long
+);
 alter table product auto_increment = 10000;
 alter table product change ProdID ProdID int(10) auto_increment
 alter table product change ProdImg ProdImg long;
@@ -92,4 +94,9 @@ values (
     '{\"querystr\":\"querystr\"}'
   );
 insert into sku (ProdID, IsMain, SkuImg, SkuProps, SkuName)
-values (10018, 1, '', '{\"con.commit()\":\"con.commit()\"}')
+values (
+    10018,
+    1,
+    '',
+    '{\"con.commit()\":\"con.commit()\"}'
+  )
