@@ -1,6 +1,8 @@
 module.exports = app => {
   const { router, controller } = app;
   // index.js
+  router.get("/api/login", controller.home.login);
+  // index.js
   router.get("/api/getBanner", controller.home.banner);
   // 信息
   router.get("/api/getCompInfo", controller.home.getCompInfo)

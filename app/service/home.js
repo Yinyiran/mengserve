@@ -6,7 +6,9 @@ class HomeService extends Service {
     return banners
   }
   async getCompInfo(params) {
-    return await this.app.mysql.get('compInfo', params)
+    const compinfo = await this.app.mysql.get('compInfo', params)
+    delete compinfo.PassWord
+    return compinfo
   }
   async getArticle(params) {
     let whereParam = {}

@@ -5,6 +5,18 @@ const Pump = require('mz-modules/pump');
 const UtilService = require("../../service/utile")
 
 class ManageService extends Service {
+  async login(param) {
+    const compinfo = await this.app.mysql.get('compInfo', params);
+    if (param.UserName === compinfo.UserName) {
+      if (param.PassWord === compinfo.PassWord) {
+        return "登录成功"
+      } else {
+        throw "登录名或密码错误"
+      }
+    } else {
+      throw "登录名或密码错误"
+    }
+  }
   async getAllFile(path) {
     let allFiles = [];
     let getFile = (path) => {
