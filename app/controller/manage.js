@@ -5,7 +5,13 @@ class ManageController extends Controller {
   // 根据filehash 判断文件是否已经上传
   async login() {
     const { ctx, service } = this;
-    ctx.body = await service.manage.login(ctx.request.body)
+    const loginState = await service.manage.login(ctx.request.body)
+    if (loginState) {
+      ctx.body = "登录成功"
+    } else {
+      ctx.status = 401
+      ctx.body = "登录名或密码错误"
+    }
   }
   async fileExist() {
     const { ctx, service } = this;

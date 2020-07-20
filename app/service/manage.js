@@ -6,15 +6,15 @@ const UtilService = require("../../service/utile")
 
 class ManageService extends Service {
   async login(param) {
-    const compinfo = await this.app.mysql.get('compInfo', params);
+    const compinfo = await this.app.mysql.get('compInfo');
     if (param.UserName === compinfo.UserName) {
       if (param.PassWord === compinfo.PassWord) {
-        return "登录成功"
+        return true
       } else {
-        throw "登录名或密码错误"
+        return false
       }
     } else {
-      throw "登录名或密码错误"
+      return false
     }
   }
   async getAllFile(path) {
