@@ -6,7 +6,7 @@ class HomeService extends Service {
     return banners
   }
   async getCompInfo(params) {
-    const compinfo = await this.app.mysql.get('compInfo', params)
+    const compinfo = await this.app.mysql.get('compinfo', params)
     delete compinfo.PassWord
     return compinfo
   }

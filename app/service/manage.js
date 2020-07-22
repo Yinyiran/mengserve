@@ -6,7 +6,7 @@ const UtilService = require("../../service/utile")
 
 class ManageService extends Service {
   async login(param) {
-    const compinfo = await this.app.mysql.get('compInfo');
+    const compinfo = await this.app.mysql.get('compinfo');
     if (param.UserName === compinfo.UserName) {
       if (param.PassWord === compinfo.PassWord) {
         return true
@@ -82,7 +82,7 @@ class ManageService extends Service {
         CompID: params.CompID
       }
     };
-    return await app.mysql.update('compInfo', params, options)
+    return await app.mysql.update('compinfo', params, options)
   }
 
   async getClassify() {
