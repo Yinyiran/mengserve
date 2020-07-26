@@ -22,16 +22,24 @@ module.exports = appInfo => {
     multipart: {
       mode: "file"
     },
-    mysql: {
-      client: {
-        host: 'localhost',
-        port: '3306',
-        user: 'root',
-        password: 'kongwu123',
-        database: 'meng'
-      },
-      app: true,
-      agent: false,
+    // mysql: {
+    //   client: {
+    //     host: 'localhost',
+    //     port: '3306',
+    //     user: 'root',
+    //     password: 'kongwu123',
+    //     database: 'meng'
+    //   },
+    //   app: true,
+    //   agent: false,
+    // },
+    sequelize: {
+      dialect: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      database: 'meng',
+      user: 'root',
+      password: 'kongwu123',
     },
   };
   return config;
