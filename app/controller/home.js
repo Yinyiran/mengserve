@@ -1,6 +1,13 @@
 const Controller = require("egg").Controller;
 
 class HomeController extends Controller {
+  async getHomeInfo() {
+    const { ctx, service } = this;
+    const articles = await service.home.getArticle({ ArtStar: 1 });
+    const banners = await service.home.getBanner();
+    const products = await service.manage.getProdList({ ProdStar: 1 });
+    ctx.body = { articles, banners, products }
+  }
   async banner() {
     const { ctx, service } = this;
     ctx.body = await service.home.getBanner();

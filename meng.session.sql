@@ -63,6 +63,9 @@ alter table file auto_increment = 10000;
 desc file
 select *
 from file;
+
+delete from file where fileid>0
+
 alter table compinfo;
 modify CompLogo long not null;
 desc article;

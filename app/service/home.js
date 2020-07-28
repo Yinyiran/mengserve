@@ -10,10 +10,10 @@ class HomeService extends Service {
     delete compinfo.PassWord
     return compinfo
   }
-  async getArticle(params) {
+  async getArticle({ ID, ArtStar }) {
     let whereParam = {}
-    if (params.id) whereParam.ArtID = params.id;
-    if (params.isStar) whereParam.ArtStar = params.isStar;
+    if (ID) whereParam.ArtID = ID;
+    if (ArtStar) whereParam.ArtStar = ArtStar;
     return await this.app.mysql.select('article', { where: whereParam, orders: [['ArtID', 'desc']] })
   }
 }

@@ -3,6 +3,7 @@ module.exports = app => {
   // index.js
   router.post("/api/login", controller.manage.login);
   // index.js
+  router.get("/api/getHomeInfo", controller.home.getHomeInfo);
   router.get("/api/getBanner", controller.home.banner);
   // 信息
   router.get("/api/getCompInfo", controller.home.getCompInfo)
